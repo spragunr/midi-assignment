@@ -15,8 +15,9 @@
     * pygame
 	* mimo
 *   Actually playing the MIDI files we will be creating below also
-    requires that [FuidSynth](https://www.fluidsynth.org/) be
-    installed on your computer.
+    requires that [FuidSynth](https://www.fluidsynth.org/) and
+    possibly [TiMidity++](https://wiki.archlinux.org/title/Timidity++)
+    be installed on your computer.
 
 ## Files
 
