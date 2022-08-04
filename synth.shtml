@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>MIDI</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ <div class="Main">
+      
+      <!--#include file="title.html" -->
+      
+      <div class="Content">
+<h2 id="python-learning-objectives">Python Learning Objectives</h2>
+<ul>
+<li>Writing and calling functions with return values</li>
+<li>Using for loops</li>
+<li>Accessing tuples using bracket notation</li>
+<li>Manipulating lists</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>This activity depends on two Python libraries that will need to be
+installed through the Thonny package manager (or pip, if you you
+aren’t using Thonny):
+<ul>
+<li>pygame</li>
+<li>mimo</li>
+</ul></li>
+<li>Actually playing the MIDI files we will be creating below also
+requires that <a href="https://www.fluidsynth.org/">FuidSynth</a> be
+installed on your computer.</li>
+</ul>
+<h2 id="files">Files</h2>
+<p>Download the following Python files and store them in the same folder:</p>
+<ul>
+<li><a href="code/synth.py">synth.py</a> FINISHED</li>
+<li><a href="code/play_midi.py">play_midi.py</a> FINISHED</li>
+<li><a href="code/midi_notes.py">midi_notes.py</a> UNFINISHED</li>
+</ul>
+<h2 id="introduction-musical-notation">Introduction: Musical Notation</h2>
+<p>You may have some experience with standard musical notation like the
+following:</p>
+<p><img style="display:block; margin-left:auto; margin-right:auto; width:20em;" src="mary_cropped.svg" alt="mary has a little lamb" ></p>
+<p>The vertical position of individual notes corresponds to the pitch,
+and different symbols are used to represent the length of the
+note. In the example above, the filled notes are quarter notes and the
+open note at the end is a half note.</p>
+<p>The goal of today’s activity is to think about different ways of
+representing and manipulating musical information in Python. In
+particular, we will be learning a little bit about
+<a href="https://en.wikipedia.org/wiki/MIDI">MIDI</a>, the Musical Instrument
+Digital Interface. MIDI is a widely-used standard for representing and
+communicating musical information in digital form.</p>
+<p>Let’s consider some options for representing the musical notes above
+using Python. One possibility is to represent the notes as a string
+containing the sequence of note names:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1">mary <span class="op">=</span> <span class="st">&quot;E D C D E E E&quot;</span></a></code></pre></div>
+<p>This is OK, but it has some weaknesses. It doesn’t tell us anything
+about the length of the individual notes, and working with it involves
+awkward string manipulation.</p>
+<p>As an alternative, let’s use a list of tuples, where each tuple
+represents a single note. For example, here are the notes above in the
+proposed format:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">mary <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">64</span>), </a>
+<a class="sourceLine" id="cb2-2" title="2">         (<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">62</span>), </a>
+<a class="sourceLine" id="cb2-3" title="3">         (<span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">60</span>), </a>
+<a class="sourceLine" id="cb2-4" title="4">         (<span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">62</span>), </a>
+<a class="sourceLine" id="cb2-5" title="5">         (<span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">64</span>),</a>
+<a class="sourceLine" id="cb2-6" title="6">         (<span class="dv">500</span>, <span class="dv">600</span>, <span class="dv">64</span>),</a>
+<a class="sourceLine" id="cb2-7" title="7">         (<span class="dv">600</span>, <span class="dv">800</span>, <span class="dv">64</span>)</a>
+<a class="sourceLine" id="cb2-8" title="8">       ]</a></code></pre></div>
+<p>Each tuple contains three numbers: the first is the start time of the
+note, the second is the end time of the note and the third is a number
+corresponding the pitch of the note. A list of these notes will be
+be ordered by the starting time of each note.</p>
+<p>One advantage of this representation is that it allows us to represent
+multiple notes played at the same time. For example, using standard
+musical notation we might see something like this:</p>
+<p><img style="display:block; margin-left:auto; margin-right:auto; width:20em;" src="mary_chord_cropped.svg" alt="mary has a little lamb" ></p>
+<p>In this case the two notes at the top are tied together with a line to
+indicate that they should be played as one long note at the same time
+as the other notes are being played. This overlapping note can be
+added as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1">mary <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">64</span>), </a>
+<a class="sourceLine" id="cb3-2" title="2">         (<span class="dv">0</span>, <span class="dv">800</span>, <span class="dv">77</span>),  <span class="co"># THE NEW </span><span class="al">NOTE</span><span class="co">!</span></a>
+<a class="sourceLine" id="cb3-3" title="3">         (<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">62</span>), </a>
+<a class="sourceLine" id="cb3-4" title="4">         (<span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">60</span>), </a>
+<a class="sourceLine" id="cb3-5" title="5">         (<span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">62</span>), </a>
+<a class="sourceLine" id="cb3-6" title="6">         (<span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">64</span>),</a>
+<a class="sourceLine" id="cb3-7" title="7">         (<span class="dv">500</span>, <span class="dv">600</span>, <span class="dv">64</span>),</a>
+<a class="sourceLine" id="cb3-8" title="8">         (<span class="dv">600</span>, <span class="dv">800</span>, <span class="dv">64</span>)</a>
+<a class="sourceLine" id="cb3-9" title="9">       ]</a></code></pre></div>
+<h2 id="exercise-1-validating-a-note-list">Exercise #1 – Validating a Note List</h2>
+<p>Complete the function named <code>valid_notes</code> in <code>notes.py</code> so that it
+conforms to the provided docstring. A list of notes is valid if and only if:
+* All note values are in the range 0-127.
+* All note start times are greater than zero.
+* The ending time of every note is greater than or equal to the
+starting time of the note.
+* The start time of every note is greater than or equal to the
+starting time of the preceding note.</p>
+<p>Here are some sample calls:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1">a <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">64</span>) ]</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="bu">print</span>(valid_notes(a)) <span class="co"># Should print True</span></a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4">b <span class="op">=</span> [ (<span class="op">-</span><span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">64</span>) ]</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="bu">print</span>(valid_notes(b)) <span class="co"># Should print False, negative start time</span></a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7">c <span class="op">=</span> [ (<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">64</span>) ]</a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="bu">print</span>(valid_notes(c)) <span class="co"># Should print False, end is before start</span></a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10">d <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">200</span>) ]</a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="bu">print</span>(valid_notes(d)) <span class="co"># Should print False, invalid note number</span></a>
+<a class="sourceLine" id="cb4-12" title="12"></a>
+<a class="sourceLine" id="cb4-13" title="13">e <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">64</span>), (<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">62</span>) ]</a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="bu">print</span>(valid_notes(e)) <span class="co"># Should print True</span></a>
+<a class="sourceLine" id="cb4-15" title="15"></a>
+<a class="sourceLine" id="cb4-16" title="16">f <span class="op">=</span> [ (<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">64</span>), (<span class="dv">40</span>, <span class="dv">200</span>, <span class="dv">62</span>) ]</a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="bu">print</span>(valid_notes(f)) <span class="co"># Should print False, second start starts before first</span></a></code></pre></div>
+<p>Think before you code: what style of for loops should you use here?
+Should you use a standard for loop, or an indexed for loop using the
+<code>range</code> function? Should you use both? Make sure to consider this for
+each of the following exercises.</p>
+<h2 id="midi">MIDI</h2>
+<p>The MIDI protocol takes a different approach from the format described
+above. Rather than representing music as a sequence of <em>notes</em>, it
+represents music as a sequence of <em>events</em>, where the start of a note
+is one event and the end of a note is another. This approach makes
+sense because MIDI wasn’t originally designed to represent musical
+scores. It was designed to connect electronic instruments and other
+devices. When a player presses a key on an electric keyboard, we want
+to communicate the starting event immediately. There is no way to know
+how long the note will be until the finger is lifted.</p>
+<h2 id="exercise-2-converting-to-events">Exercise #2 – Converting to Events</h2>
+<p>Complete the <code>notes_to_events</code> function so that it conforms to the
+provided docstring. Each event should be represented as a tuple with
+three fields: The time of the event, the note number, and the type of
+event. Event types are either <code>'note_on'</code> or <code>'note_off'</code>. Each note
+should result in exactly two events and the list of events must be
+sorted by time. The easiest way to manage this is to create the full
+list of events, then sort it by the starting times when the list is
+complete.</p>
+<p>This can be accomplished by using the <code>sort</code> method for Python
+lists. For example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1">a <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb5-2" title="2">a.sort() <span class="co"># the list now contains [1, 2, 3]</span></a></code></pre></div>
+<p>When the <code>sort</code> method is called on a list of tuples, the list will be
+sorted according to the first element in each tuple, which in our case
+will be the event times.</p>
+<p>Here are some sample calls to <code>notes_to_events</code> illustrating the
+expected behavior:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">a <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">64</span>) ]</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="bu">print</span>(notes_to_events(a)) <span class="co"># prints [(0, 64, &#39;note_on&#39;), (100, 64, &#39;note_off&#39;)]</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4">b <span class="op">=</span> [ (<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">64</span>), (<span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">65</span>)]</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="bu">print</span>(notes_to_events(b)) <span class="co"># prints [(0, 64, &#39;note_on&#39;), </span></a>
+<a class="sourceLine" id="cb6-6" title="6">                          <span class="co">#         (50, 65, &#39;note_on&#39;),</span></a>
+<a class="sourceLine" id="cb6-7" title="7">                          <span class="co">#         (75, 65, &#39;note_off&#39;),</span></a>
+<a class="sourceLine" id="cb6-8" title="8">                          <span class="co">#         (200, 64, &#39;note_off&#39;)]</span></a></code></pre></div>
+<h2 id="exercise-3-calculating-deltas">Exercise #3 Calculating Deltas</h2>
+<p><a href="https://mido.readthedocs.io/en/latest/">Mido</a> is a Python library for
+reading, manipulating and writing MIDI files. The event lists above
+are <em>almost</em> in a format that we can use with mido. One remaining
+problem is the way time is handled in our events. In the event lists
+generated above, the time field represents the <em>absolute</em> time that
+the corresponding event occurs. The MIDI protocol actually represents
+time in terms of <em>delta</em>s between events. The delta value stored with
+each event represents the elapsed time since the previous event.
+Complete the <code>event_to_midi_events</code> function to convert our event
+lists into this representation. The following code snippet shows an
+example of the expected behavior:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">events <span class="op">=</span> [(<span class="dv">0</span>, <span class="dv">64</span>, <span class="st">&#39;note_on&#39;</span>), </a>
+<a class="sourceLine" id="cb7-2" title="2">          (<span class="dv">50</span>, <span class="dv">65</span>, <span class="st">&#39;note_on&#39;</span>),   <span class="co"># delta is 50</span></a>
+<a class="sourceLine" id="cb7-3" title="3">          (<span class="dv">75</span>, <span class="dv">65</span>, <span class="st">&#39;note_off&#39;</span>),  <span class="co"># delta is 25 </span></a>
+<a class="sourceLine" id="cb7-4" title="4">          (<span class="dv">200</span>, <span class="dv">64</span>, <span class="st">&#39;note_off&#39;</span>)] <span class="co"># delta is 125</span></a>
+<a class="sourceLine" id="cb7-5" title="5">          </a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="bu">print</span>(events_to_midi_events(events)) <span class="co"># prints [(0, 64, &#39;note_on&#39;), </span></a>
+<a class="sourceLine" id="cb7-7" title="7">                                    <span class="co">#         (50, 65, &#39;note_on&#39;),</span></a>
+<a class="sourceLine" id="cb7-8" title="8">                                    <span class="co">#         (25, 65, &#39;note_off&#39;),</span></a>
+<a class="sourceLine" id="cb7-9" title="9">                                    <span class="co">#         (125, 64, &#39;note_off&#39;)]</span></a></code></pre></div>
+<h2 id="exercise-4-using-mido-to-create-midi-files">Exercise #4 Using Mido to create MIDI files</h2>
+<p>We now have all of the tools in place to create MIDI files from a
+sequence of notes. Here is an example illustrating how the Mido
+library can be used to create a midi file corresponding to the
+previous example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="im">from</span> mido <span class="im">import</span> Message, MidiFile, MidiTrack</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">outfile <span class="op">=</span> MidiFile()</a>
+<a class="sourceLine" id="cb8-4" title="4">track <span class="op">=</span> MidiTrack() <span class="co"># MIDI files can have multiple tracks, but we won&#39;t.</span></a>
+<a class="sourceLine" id="cb8-5" title="5">outfile.tracks.append(track)</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7">track.append(Message(<span class="st">&#39;note_on&#39;</span>, note<span class="op">=</span><span class="dv">64</span>, velocity<span class="op">=</span><span class="dv">100</span>, time<span class="op">=</span><span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb8-8" title="8">track.append(Message(<span class="st">&#39;note_on&#39;</span>, note<span class="op">=</span><span class="dv">65</span>, velocity<span class="op">=</span><span class="dv">100</span>, time<span class="op">=</span><span class="dv">50</span>))</a>
+<a class="sourceLine" id="cb8-9" title="9">track.append(Message(<span class="st">&#39;note_on&#39;</span>, note<span class="op">=</span><span class="dv">65</span>, velocity<span class="op">=</span><span class="dv">100</span>, time<span class="op">=</span><span class="dv">25</span>))</a>
+<a class="sourceLine" id="cb8-10" title="10">track.append(Message(<span class="st">&#39;note_on&#39;</span>, note<span class="op">=</span><span class="dv">64</span>, velocity<span class="op">=</span><span class="dv">100</span>, time<span class="op">=</span><span class="dv">125</span>))</a>
+<a class="sourceLine" id="cb8-11" title="11"></a>
+<a class="sourceLine" id="cb8-12" title="12">outfile.save(<span class="st">&#39;out.mid&#39;</span>)</a></code></pre></div>
+<p>Mido represents a MIDI file using a <code>MidiFile</code> object, which can
+contain multiple <code>MidiTrack</code> objects, which themselves contain a
+sequence of <code>Message</code> objects corresponding to events.</p>
+<p>Complete the unfinished <code>notes_to_midi</code> function so that it conforms
+to the provided docstring.</p>
+<h2 id="exercise-5-composition">Exercise #5 Composition</h2>
+<p>The provided <code>synth.py</code> program uses pygame to provide a simple
+graphical music composition tool. If you have successfully completed
+the exercises above, you should be able to use the tool to generate
+and play MIDI files. The tool accepts the following input:</p>
+<ul>
+<li>left mouse button activates grid squares indicating that the
+corresponding note should play at the indicated time.</li>
+<li>right mouse button clears a square</li>
+<li>pressing the ‘c’ key will clear the current composition.</li>
+<li>pressing the ‘p’ key will save and play the current composition. The
+fill will be saved as ‘synth.mid’ in the same folder where the
+program was executed. If playback doesn’t work, you should be able
+to play the saved file using a web-based MIDI player like
+<a href="https://midiplayer.ehubsoft.net/" class="uri">https://midiplayer.ehubsoft.net/</a></li>
+</ul>
+<p>Use this tool to create a beautiful musical composition.</p>
+	
+      </div>
+    </div>
+</body>
+</html>
