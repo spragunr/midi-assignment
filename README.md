@@ -65,12 +65,12 @@ proposed format:
 ```python
 mary = [ (0, 100, 64), 
          (100, 200, 62), 
-		 (200, 300, 60), 
-		 (300, 400, 62), 
-		 (400, 500, 64),
-		 (500, 600, 64),
-		 (600, 800, 64)
-	   ]
+         (200, 300, 60), 
+	 (300, 400, 62), 
+         (400, 500, 64),
+         (500, 600, 64),
+         (600, 800, 64)
+	]
 ```
 
 Each tuple contains three numbers: the first is the start time of the
@@ -92,16 +92,16 @@ added as follows:
 ```python
 mary = [ (0, 100, 64), 
          (0, 800, 77),  # THE NEW NOTE!
-         (100, 200, 62), 
-		 (200, 300, 60), 
-		 (300, 400, 62), 
-		 (400, 500, 64),
-		 (500, 600, 64),
-		 (600, 800, 64)
-	   ]
+         (100, 200, 62),
+	 (200, 300, 60),
+	 (300, 400, 62),
+	 (400, 500, 64),
+	 (500, 600, 64),
+	 (600, 800, 64)
+        ]
 ```
 
-## Exercise \#1 -- Validating a Note List
+## Exercise \#1 Validating a Note List
 
 Complete the function named `valid_notes` in `notes.py` so that it
 conforms to the provided docstring.  A list of notes is valid if and only if:
@@ -151,7 +151,7 @@ devices. When a player presses a key on an electric keyboard, we want
 to communicate the starting event immediately. There is no way to know
 how long the note will be until the finger is lifted.
 
-## Exercise \#2 -- Converting to Events
+## Exercise \#2 Converting to Events
 
 Complete the `notes_to_events` function so that it conforms to the
 provided docstring. Each event should be represented as a tuple with
@@ -199,19 +199,19 @@ generated above, the time field represents the *absolute* time that
 the corresponding event occurs. The MIDI protocol actually represents
 time in terms of *delta*s between events.  The delta value stored with
 each event represents the elapsed time since the previous event.
-Complete the `event_to_midi_events` function to convert our event
+Complete the `events_to_midi_events` function to convert our event
 lists into this representation.  The following code snippet shows an
 example of the expected behavior:
 ```python
 events = [(0, 64, 'note_on'), 
-	      (50, 65, 'note_on'),   # delta is 50
+	  (50, 65, 'note_on'),   # delta is 50
           (75, 65, 'note_off'),  # delta is 25 
           (200, 64, 'note_off')] # delta is 125
 		  
 print(events_to_midi_events(events)) # prints [(0, 64, 'note_on'), 
-                                    #         (50, 65, 'note_on'),
-                                    #         (25, 65, 'note_off'),
-                                    #         (125, 64, 'note_off')]
+                                     #         (50, 65, 'note_on'),
+                                     #         (25, 65, 'note_off'),
+                                     #         (125, 64, 'note_off')]
 ```
 
 
