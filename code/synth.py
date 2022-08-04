@@ -1,4 +1,5 @@
 import subprocess
+import sys
 import pygame
 import midi_notes
 
@@ -37,7 +38,7 @@ class GridSynth:
         midi_notes.notes_to_midi(notes, 'synth.mid')
         # Doing it this way because there is a bug that causes pygame
         # to crash after one midi file is played.
-        subprocess.call(['python', 'play_midi.py', 'synth.mid'])
+        subprocess.call([sys.executable, 'play_midi.py', 'synth.mid'])
 
     def draw_rect(self, row, column, color, border=0, text=None):
 
