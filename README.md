@@ -67,7 +67,7 @@ proposed format:
 mary = [ (0, 100, 64), 
          (100, 200, 62), 
          (200, 300, 60), 
-	 (300, 400, 62), 
+         (300, 400, 62), 
          (400, 500, 64),
          (500, 600, 64),
          (600, 800, 64)
@@ -94,11 +94,11 @@ added as follows:
 mary = [ (0, 100, 64), 
          (0, 800, 77),  # THE NEW NOTE!
          (100, 200, 62),
-	 (200, 300, 60),
-	 (300, 400, 62),
-	 (400, 500, 64),
-	 (500, 600, 64),
-	 (600, 800, 64)
+         (200, 300, 60),
+         (300, 400, 62),
+         (400, 500, 64),
+         (500, 600, 64),
+         (600, 800, 64)
         ]
 ```
 
@@ -205,7 +205,7 @@ lists into this representation.  The following code snippet shows an
 example of the expected behavior:
 ```python
 events = [(0, 64, 'note_on'), 
-	  (50, 65, 'note_on'),   # delta is 50
+          (50, 65, 'note_on'),   # delta is 50
           (75, 65, 'note_off'),  # delta is 25 
           (200, 64, 'note_off')] # delta is 125
 		  
@@ -252,14 +252,14 @@ graphical music composition tool.  If you have successfully completed
 the exercises above, you should be able to use the tool to generate
 and play MIDI files. The tool accepts the following input:
 
-* left mouse button activates grid squares indicating that the
+* The left mouse button activates grid squares indicating that the
   corresponding note should play at the indicated time.
-* right mouse button clears a square
-* pressing the 'c' key will clear the current composition.
-* pressing the 'p' key will save and play the current composition. The
-  fill will be saved as 'synth.mid' in the same folder where the
+* The right mouse button clears a square.
+* Pressing the 'c' key will clear the current composition.
+* Pressing the 'p' key will save and play the current composition. The
+  file will be saved as `synth.mid` in the same folder where the
   program was executed. If playback doesn't work, you should be able
   to play the saved file using a web-based MIDI player like
-  <https://midiplayer.ehubsoft.net/>
+  <https://midiplayer.ehubsoft.net/>.
 
 Use this tool to create a beautiful musical composition.
