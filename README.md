@@ -13,7 +13,7 @@
     installed through the Thonny package manager (or pip, if you you
     aren't using Thonny):
     * pygame
-	* mimo
+    * mido
 *   Actually playing the MIDI files we will be creating below also
     requires that [FuidSynth](https://www.fluidsynth.org/) and
     possibly [TiMidity++](https://wiki.archlinux.org/title/Timidity++)
